@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-admin-layout>
     <div class="max-w-7xl mx-auto p-4">
         <h1 class="text-3xl font-bold mb-6">Orders</h1>
 
@@ -36,4 +34,4 @@
             </tbody>
         </table>
     </div>
-@endsection
+</x-admin-layout>
