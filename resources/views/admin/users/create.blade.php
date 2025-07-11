@@ -40,9 +40,11 @@
                     @endforeach
                 </select>
             </div>
-
+            @hasPermission('*')
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Create Admin</button>
             <a href="{{ route('admin.roles.index') }}" class="ml-3 text-gray-600 hover:underline">Cancel</a>
+            @endhasPermission()
+
 
         </form>
     </div>

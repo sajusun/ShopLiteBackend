@@ -38,10 +38,10 @@
                     @endforeach
                 </select>
             </div>
-
+            @hasPermission('edit')
             <button type="submit" class="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">Update</button>
             <a href="{{ route('admin.roles.index') }}" class="ml-3 text-gray-600 hover:underline">Cancel</a>
-
+@endhasPermission
         </form>
     </div>
 </x-admin-layout>

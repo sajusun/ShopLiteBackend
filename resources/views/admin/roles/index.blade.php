@@ -38,8 +38,11 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @hasPermission('*')
+                    <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Save Permissions
+                    </button>
+                    @endhasPermission
 
-                    <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Save Permissions</button>
                 </form>
 
             </div>
@@ -78,9 +81,11 @@
                             <td class="p-3 border">
                                 <form action="{{ route('admin.users.changeRole', $user->id) }}" method="POST">
                                     @csrf
-                                    <select name="role_id" onchange="this.form.submit()" class="border-0 cursor-pointer p-1 w-full">
+                                    <select name="role_id" onchange="this.form.submit()"
+                                            class="border-0 cursor-pointer p-1 w-full">
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                            <option
+                                                value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
                                                 {{ $role->name }}
                                             </option>
                                         @endforeach
@@ -88,8 +93,10 @@
                                 </form>
                             </td>
                             <td class="p-3 border space-x-2 text-center">
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                                <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Delete this user?')">
+                                <a href="{{ route('admin.users.edit', $user->id) }}"
+                                   class="text-blue-600 hover:underline">Edit</a>
+                                <form action="{{ route('admin.users.delete', $user->id) }}" method="POST"
+                                      class="inline-block" onsubmit="return confirm('Delete this user?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:underline">Delete</button>
@@ -101,11 +108,16 @@
                 </table>
             </div>
 
+            @hasPermission('*')
             <!-- Create New Admin Button -->
             <div class="mt-6">
-                <a href="{{ route('admin.users.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add New Admin</a>
+                <a href="{{ route('admin.users.create') }}"
+                   class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add New Admin</a>
             </div>
+            @endhasPermission('*')
 
-    </div>
+
+
+        </div>
     </div>
 </x-admin-layout>
