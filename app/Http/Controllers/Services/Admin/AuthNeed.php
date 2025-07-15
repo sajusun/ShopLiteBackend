@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers\Services;
+namespace App\Http\Controllers\Services\Admin;
+
 use Illuminate\Support\Facades\Auth;
 
 class AuthNeed{

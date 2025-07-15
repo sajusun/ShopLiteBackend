@@ -3,24 +3,15 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\auth\AdminAuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\Admin\RolePermissionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('admin/login', [AdminAuthController::class, 'login']);
 
-Route::prefix('admin/dashboard')->group(function () {
-Route::middleware(['admin.auth'])->group(function () {
-    Route::get('/', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
-
-    Route::resource('products', ProductController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('orders', OrderController::class);
-
-    Route::post('logout', [AdminAuthController::class, 'destroy'])->name('admin.logout');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [AdminAuthController::class, 'login']);
+Route::middleware(['admin.auth'])->prefix('dashboard')->group(function () {
+    Route::get('/', [AdminAuthController::class, 'dashboard'])->name('dashboard');
 });
 });
 
@@ -40,8 +31,11 @@ Route::middleware(['admin.auth'])->prefix('admin/dashboard')->name('admin.')->gr
 });
 
 Route::middleware('admin.auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::post('/logout', [AdminAuthController::class, 'destroy'])->name('logout');
+
     Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [AdminProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/profile/password', [AdminProfileController::class, 'passwordUpdate'])->name('password.update');
 });
+
 

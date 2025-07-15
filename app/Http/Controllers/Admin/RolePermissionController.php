@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Services\AuthNeed;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Services\Admin\AuthNeed;
 use App\Models\Admin;
 use App\Models\Permission;
 use App\Models\Role;

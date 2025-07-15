@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Services\AuthNeed;
+use App\Http\Controllers\Services\Admin\AuthNeed;
 use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Http\RedirectResponse;

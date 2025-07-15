@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\admin;
 
-use App\Http\Controllers\Admin\AdminController;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

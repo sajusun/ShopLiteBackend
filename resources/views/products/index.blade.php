@@ -1,39 +1,23 @@
-<x-admin-layout>
-    <div class="max-w-7xl mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-6">Products</h1>
+<x-app-layout>
+    <div class="max-w-7xl mx-auto p-6">
+        <h2 class="text-3xl font-bold mb-6">Shop Products</h2>
 
-        <a href="{{ route('products.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">+ Add Product</a>
-
-        <table class="table-auto w-full mt-4 border">
-            <thead class="bg-gray-200">
-            <tr>
-                <th class="p-2 border">Name</th>
-                <th class="p-2 border">Price</th>
-                <th class="p-2 border">Stock</th>
-                <th class="p-2 border">Category</th>
-                <th class="p-2 border">Action</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             @foreach($products as $product)
-                <tr>
-                    <td class="p-2 border">{{ $product->name }}</td>
-                    <td class="p-2 border">${{ $product->price }}</td>
-                    <td class="p-2 border">{{ $product->stock }}</td>
-                    <td class="p-2 border">{{ $product->category->name }}</td>
-                    <td class="p-2 border">
-                        <a href="{{ route('products.edit', $product) }}" class="text-blue-500">Edit</a>
-                        |
-                        <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline"
-                              onsubmit="return confirm('Delete this product?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-500">Delete</button>
-                        </form>
-                    </td>
-                </tr>
+                <div class="border rounded-lg overflow-hidden shadow">
+                    <a href="{{ route('user.products.show', $product) }}">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="" class="w-full h-48 object-cover">
+                        <div class="p-3">
+                            <h3 class="font-bold text-lg">{{ $product->name }}</h3>
+                            <p class="text-gray-600">${{ $product->price }}</p>
+                        </div>
+                    </a>
+                </div>
             @endforeach
-            </tbody>
-        </table>
+        </div>
+
+        <div class="mt-6">
+            {{ $products->links() }}
+        </div>
     </div>
-</x-admin-layout>
+</x-app-layout>

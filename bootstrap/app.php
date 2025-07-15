@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Middleware\AdminAuthenticate;
-use App\Http\Middleware\CheckPermission;
-use App\Http\Middleware\CheckRole;
+use App\Http\Middleware\admin\AdminAuthenticate;
+use App\Http\Middleware\admin\CheckPermission;
+use App\Http\Middleware\admin\CheckRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

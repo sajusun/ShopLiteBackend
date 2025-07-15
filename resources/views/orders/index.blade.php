@@ -1,37 +1,34 @@
-<x-admin-layout>
-    <div class="max-w-7xl mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-6">Orders</h1>
+<x-app-layout>
+    <div class="max-w-5xl mx-auto p-6">
+        <h2 class="text-2xl font-bold mb-6">Your Orders</h2>
 
-        <table class="table-auto w-full border">
-            <thead class="bg-gray-200">
-            <tr>
-                <th class="p-2 border">Order ID</th>
-                <th class="p-2 border">Customer</th>
-                <th class="p-2 border">Total</th>
-                <th class="p-2 border">Status</th>
-                <th class="p-2 border">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($orders as $order)
-                <tr>
-                    <td class="p-2 border">#{{ $order->id }}</td>
-                    <td class="p-2 border">{{ $order->user->name }}</td>
-                    <td class="p-2 border">${{ $order->total_price }}</td>
-                    <td class="p-2 border">{{ ucfirst($order->status) }}</td>
-                    <td class="p-2 border">
-                        <a href="{{ route('orders.show', $order) }}" class="text-blue-500">View</a>
-                        |
-                        <form action="{{ route('orders.destroy', $order) }}" method="POST" class="inline"
-                              onsubmit="return confirm('Delete this order?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-500">Delete</button>
-                        </form>
-                    </td>
+        @if($orders->isEmpty())
+            <p>You haven’t placed any orders yet.</p>
+        @else
+            <table class="w-full border text-sm">
+                <thead>
+                <tr class="border-b">
+                    <th class="p-2">Order No</th>
+                    <th class="p-2">Total</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Date</th>
+                    <th class="p-2">Action</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach($orders as $order)
+                    <tr class="border-b">
+                        <td class="p-2 font-semibold">#{{ $order->id }}</td>
+                        <td class="p-2">${{ $order->total_price }}</td>
+                        <td class="p-2">{{ ucfirst($order->status) }}</td>
+                        <td class="p-2">{{ $order->created_at->format('d M, Y') }}</td>
+                        <td class="p-2">
+                            <a href="{{ route('orders.show', $order) }}" class="text-blue-500">View</a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
-</x-admin-layout>
+</x-app-layout>
