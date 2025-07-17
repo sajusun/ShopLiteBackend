@@ -1,24 +1,17 @@
-<x-admin-layout>
-    <div class="max-w-4xl mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-6">Categories</h1>
+<x-app-layout>
+    <div class="max-w-5xl mx-auto px-4 py-10">
+        <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Browse by Categories</h2>
 
-        <a href="{{ route('categories.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">+ Add Category</a>
-
-        <ul class="mt-4 space-y-2">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach($categories as $category)
-                <li class="p-3 bg-white rounded shadow flex justify-between items-center">
-                    {{ $category->name }}
-                    <div class="space-x-2">
-                        <a href="{{ route('categories.edit', $category) }}" class="text-blue-500">Edit</a>
-                        <form action="{{ route('categories.destroy', $category) }}" method="POST" class="inline"
-                              onsubmit="return confirm('Delete this category?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-500">Delete</button>
-                        </form>
-                    </div>
-                </li>
+                <a href="{{ route('user.products.index',  'category='.$category->name) }}"
+                   class="bg-white p-6 rounded-lg shadow hover:shadow-md text-center transition duration-300">
+                    <img src="{{ asset('storage/'.$category->randomProductImage() ?? 'default-category.jpg') }}"
+                         alt="{{ $category->name }}"
+                         class="h-24 w-full object-cover mb-4 rounded">
+                    <h3 class="text-lg font-semibold text-gray-700">{{ $category->name }}</h3>
+                </a>
             @endforeach
-        </ul>
+        </div>
     </div>
-</x-admin-layout>
+</x-app-layout>

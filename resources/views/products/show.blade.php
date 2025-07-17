@@ -10,7 +10,7 @@
                 <p class="text-xl text-green-600 font-bold mb-3">${{ $product->price }}</p>
                 <p class="mb-4 text-gray-700">{{ $product->description }}</p>
 
-                <form method="POST" action="{{ route('cart.add', $product) }}">
+                <form method="POST" action="{{ route('cart.add', $product->id) }}">
                     @csrf
                     <input type="number" name="quantity" value="1" min="1" class="border p-2 w-20 rounded mb-3">
                     <br>
