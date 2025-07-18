@@ -1,5 +1,4 @@
 <?php
-// Cart actions
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -20,16 +19,15 @@ Route::get('/shop', [ProductController::class, 'index'])->name('shop.products.in
 Route::get('/shop/product/{slug}/{product}', [ProductController::class, 'show'])->name('shop.products.show');
 
 Route::get('/categories', [CategoryController::class, 'categoryView']);
-//Route::get('/shop', [CategoryController::class, 'show'])->name('category.products');
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+
+    Route::get('/my-orders', [OrderController::class, 'index'])->name('my.orders.index');
+    Route::get('/my-orders/{order}', [OrderController::class, 'show'])->name('my.orders.show');
+    Route::patch('/my-orders/{order}/cancel', [OrderController::class, 'cancel'])->name('my.orders.cancel');
+
 });
 
-// User order history and details
-Route::middleware(['auth'])->group(function () {
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-});

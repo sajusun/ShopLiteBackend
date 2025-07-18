@@ -55,7 +55,7 @@
             <div class="mb-4">
                 <label class="block font-medium mb-2">Product Image</label>
                 @if($product->image)
-                    <img src="{{ asset('uploads/products/'.$product->image) }}" class="w-32 h-32 object-cover mb-2 rounded">
+                    <img src="{{ asset('storage/'.$product->image) }}" class="w-32 h-32 object-cover mb-2 rounded">
                 @endif
                 <input type="file" name="image"
                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring">

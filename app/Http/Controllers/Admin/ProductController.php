@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -23,19 +26,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => 'required',
-            'price'       => 'required|numeric',
-            'stock'       => 'required|integer',
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
-            'image'       => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
 
         $product = new Product($request->except('image'));
 
         if ($request->hasFile('image')) {
-            $filename = time().'.'.$request->image->extension();
-            $request->image->move(public_path('uploads/products'), $filename);
-            $product->image = $filename;
+            $image = $request->file('image');
+            $filename = time() . '.' . $request->image->getClientOriginalName();
+            $image->storeAs('products', $filename, 'public');
+            $filename = time() . '_' . $request->image->getClientOriginalName();
+          //  Storage::disk('public')->putFileAs('products', $request->file('image'), $filename);
+            $product->image = 'products/'.$filename;
         }
 
         $product->slug = \Str::slug($request->name);
@@ -58,19 +64,23 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name'        => 'required',
-            'price'       => 'required|numeric',
-            'stock'       => 'required|integer',
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
-            'image'       => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
 
         $product->fill($request->except('image'));
-
+       // $user = Auth::user();
         if ($request->hasFile('image')) {
-            $filename = time().'.'.$request->image->extension();
-            $request->image->move(public_path('uploads/products'), $filename);
-            $product->image = $filename;
+            $filename = time() . '_' . $request->image->getClientOriginalName();
+            Storage::disk('public')->putFileAs('products', $request->file('image'), $filename);
+
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $product->image = 'products/'.$filename;
         }
 
         $product->slug = \Str::slug($request->name);

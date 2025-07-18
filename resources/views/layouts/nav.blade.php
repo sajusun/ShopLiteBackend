@@ -7,7 +7,7 @@
 
             <!-- Logo -->
             <a href="{{ url('/') }}" class="text-2xl font-bold text-indigo-600">
-                LiteShop
+                ShopLite
             </a>
             <form action="{{ route('shop.products.index') }}" method="GET" class="px-4">
                 <input type="text" name="q" placeholder="Search..."
@@ -86,6 +86,11 @@
                                    class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                     <i class="fas fa-user w-4 mr-2"> </i>
                                     Profile
+                                </a>
+                                <a href="{{ route('my.orders.index') }}"
+                                   class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                    <i class="fas fa-orders w-4 mr-2"> </i>
+                                    Orders
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

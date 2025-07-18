@@ -34,7 +34,7 @@
 
         <!-- Footer -->
         <footer class="bg-white border-t mt-16 text-center py-6 text-gray-500 text-sm">
-            &copy; {{ date('Y') }} LiteShop. All rights reserved.
+            &copy; {{ date('Y') }} ShopLite. All rights reserved.
         </footer>
     </body>
 </html>
