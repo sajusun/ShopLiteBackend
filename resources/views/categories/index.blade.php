@@ -1,16 +1,28 @@
 <x-app-layout>
-    <div class="max-w-5xl mx-auto px-4 py-10">
-        <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Browse by Categories</h2>
+    <div class="max-w-7xl mx-auto py-8 px-4">
+        <h2 class="text-3xl font-bold mb-6">Categories</h2>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($categories as $category)
-                <a href="{{ route('user.products.index',  'category='.$category->name) }}"
-                   class="bg-white p-6 rounded-lg shadow hover:shadow-md text-center transition duration-300">
-                    <img src="{{ asset('storage/'.$category->randomProductImage() ?? 'default-category.jpg') }}"
-                         alt="{{ $category->name }}"
-                         class="h-24 w-full object-cover mb-4 rounded">
-                    <h3 class="text-lg font-semibold text-gray-700">{{ $category->name }}</h3>
-                </a>
+                <div class="bg-white shadow rounded p-4">
+                    <h3 class="text-xl font-semibold mb-2">{{ $category->name }}</h3>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        @forelse($category->products as $product)
+                            <div class="border rounded overflow-hidden">
+                                <a href="{{ route('shop.products.show', [$product->slug,$product->id]) }}" >
+                                    <img src="{{ asset('storage/'.$product->image) }}" class="h-24 w-full object-cover" alt="{{ $product->name }}">
+
+                                </a>
+                            </div>
+                        @empty
+                            <p class="text-gray-500 text-sm col-span-2">No products available.</p>
+                        @endforelse
+                    </div>
+
+                    <a href="{{ route('shop.products.index','category='. $category->name) }}"
+                       class="text-indigo-600 hover:underline text-sm font-medium">Browse All Products →</a>
+                </div>
             @endforeach
         </div>
     </div>

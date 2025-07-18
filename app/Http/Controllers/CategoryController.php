@@ -21,4 +21,13 @@ class CategoryController extends Controller
         return view('products.index', compact('products'));
     }
 
+    public function categoryView()
+    {
+        $categories = Category::with(['products' => function ($q) {
+            $q->inRandomOrder()->limit(4); // Fetch 4 random products
+        }])->get();
+        return view('categories.index', compact('categories'));
+    }
+
+
 }

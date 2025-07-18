@@ -16,10 +16,10 @@ Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remov
 Route::get('/contact', [PageController::class, 'contact']);
 Route::post('/contact', [PageController::class, 'send'])->name('contact.submit');
 
-Route::get('/shop', [ProductController::class, 'index'])->name('user.products.index');
-Route::get('/shop/product/{slug}/{product}', [ProductController::class, 'show'])->name('user.products.show');
+Route::get('/shop', [ProductController::class, 'index'])->name('shop.products.index');
+Route::get('/shop/product/{slug}/{product}', [ProductController::class, 'show'])->name('shop.products.show');
 
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'categoryView']);
 //Route::get('/shop', [CategoryController::class, 'show'])->name('category.products');
 
 

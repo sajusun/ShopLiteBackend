@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[ShopController::class,'home'])->name('home');

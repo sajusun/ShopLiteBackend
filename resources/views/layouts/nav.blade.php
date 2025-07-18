@@ -9,7 +9,7 @@
             <a href="{{ url('/') }}" class="text-2xl font-bold text-indigo-600">
                 LiteShop
             </a>
-            <form action="{{ url('/search') }}" method="GET" class="px-4">
+            <form action="{{ route('shop.products.index') }}" method="GET" class="px-4">
                 <input type="text" name="q" placeholder="Search..."
                        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </form>
@@ -33,11 +33,10 @@
                               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 7h13L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
                     </svg>
                     <span class="absolute -top-2 -right-2 text-xs font-bold bg-red-500 text-white rounded-full px-1">
-            {{ count(session('cart', 0)) }}
-{{--                        {{count(session()->get('cart', []))}}--}}
+{{--            {{ count(session('cart', 0)) }}--}}
+                        {{count(session()->get('cart', []))}}
           </span>
                 </a>
-
                 <!-- User Auth -->
 
 
