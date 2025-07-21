@@ -16,6 +16,7 @@
                     <th class="p-2">Total</th>
                     <th class="p-2">Status</th>
                     <th class="p-2">Date</th>
+                    <th class="p-2">Payment Method</th>
                     <th class="p-2">Action</th>
                 </tr>
                 </thead>
@@ -26,6 +27,7 @@
                         <td class="p-2">${{ $order->total_price }}</td>
                         <td class="p-2">{{ ucfirst($order->status) }}</td>
                         <td class="p-2">{{ $order->created_at->format('d M, Y') }}</td>
+                        <td class="p-2">{{ $order->payment_method }}</td>
                         <td class="p-2">
                             <a href="{{ route('my.orders.show', $order) }}" class="text-blue-500">View</a>
                         </td>

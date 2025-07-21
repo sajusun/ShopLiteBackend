@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin-layout>
     <div class="max-w-4xl mx-auto p-6">
         @if (session('error'))
             <div class="bg-red-100 text-red-700 p-3 mb-4 rounded text-center">
@@ -10,10 +10,16 @@
             <strong>Status:</strong> {{ ucfirst($order->status) }} <br>
             <strong>Placed On:</strong> {{ $order->created_at->format('d M, Y') }}
         </div>
+            <div class=" w-full shadow-md py-4 rounded border-b my-4 space-y-2">
+                <div class="flex justify-between w-96 px-4"><p>Receiver Name: </p><p>{{$order->shipping_name}}</p></div>
+                <div class="flex justify-between w-96 px-4"><p>Receiver Phone: </p><p>{{$order->shipping_phone}}</p></div>
+                <div class="flex justify-between w-96 px-4 "><p>Shipping Address: </p><p>{{$order->shipping_address}}</p></div>
+                <div class="flex justify-between w-96 px-4"><p>Payment Method: </p><p>{{$order->payment_method}}</p></div>
+            </div>
 <div class="flex justify-between mb-2">
     <h3 class="text-lg font-bold">products:</h3>
     @if ($order->status === 'pending')
-        <form action="{{ route('my.orders.cancel', $order->id) }}" method="POST"
+        <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST"
               onsubmit="return confirm('Are you sure you want to cancel this order?');">
             @csrf
             @method('PATCH')
@@ -51,7 +57,7 @@
         <a href="{{ route('my.orders.index') }}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded">Back to Orders</a>
     </div>
 
-</x-app-layout>
+</x-admin-layout>
 
 
 

@@ -2,7 +2,7 @@
     <div class="max-w-xl mx-auto p-6 bg-white shadow rounded">
         <h1 class="text-2xl font-bold mb-4">Edit Category</h1>
 
-        <form action="{{ route('categories.update', $category) }}" method="POST">
+        <form action="{{ route('admin.categories.update', $category) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -20,7 +20,7 @@
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Update Category
             </button>
-            <a href="{{ route('categories.index') }}" class="ml-4 text-gray-600">Cancel</a>
+            <a href="{{ route('admin.categories.index') }}" class="ml-4 text-gray-600">Cancel</a>
         </form>
     </div>
 </x-admin-layout>

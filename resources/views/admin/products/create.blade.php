@@ -2,7 +2,7 @@
     <div class="max-w-2xl mx-auto p-6 bg-white shadow rounded">
         <h1 class="text-2xl font-bold mb-4">Add New Product</h1>
 
-        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-4">
@@ -64,7 +64,7 @@
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Save Product
             </button>
-            <a href="{{ route('products.index') }}" class="ml-4 text-gray-600">Cancel</a>
+            <a href="{{ route('admin.products.index') }}" class="ml-4 text-gray-600">Cancel</a>
         </form>
     </div>
 </x-admin-layout>

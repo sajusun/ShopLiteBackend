@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\auth\AdminAuthController;
 use App\Http\Controllers\Admin\RolePermissionController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,6 +28,10 @@ Route::middleware(['admin.auth'])->prefix('admin/dashboard')->name('admin.')->gr
     Route::post('/users/create', [AdminController::class, 'store'])->name('users.store');
 
     Route::delete('/users/{id}/delete', [AdminController::class, 'delete'])->name('users.delete');
+
+    Route::get('/my-user-list', [UserController::class, 'create'])->name('my.users.index');
+    Route::delete('/my-user-list/bulk-delete', [UserController::class, 'bulkDelete'])->name('my.users.bulk.delete');
+
 
 });
 

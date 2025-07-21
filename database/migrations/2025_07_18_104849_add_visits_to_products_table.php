@@ -15,4 +15,10 @@ return new class extends Migration
             $table->unsignedInteger('visits')->default(0);
         });
     }
+    public function down(): void
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('visits');
+        });
+    }
 };

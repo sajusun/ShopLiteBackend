@@ -6,7 +6,6 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    // List all orders of logged-in user
     public function index()
     {
         $orders = Order::where('user_id', auth()->id())->orderByDesc('created_at')->get();
@@ -34,6 +33,10 @@ class OrderController extends Controller
         if ($order->status !== 'pending') {
             return redirect()->back()->with('error', 'Order cannot be cancelled at this stage.');
         }
+        // Restore stock for each item
+//        foreach ($order->items as $item) {
+//            $item->product->increment('stock', $item->quantity);
+//        }
 
         $order->update([
             'status' => 'canceled',

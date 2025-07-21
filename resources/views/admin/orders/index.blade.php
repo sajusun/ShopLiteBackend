@@ -14,15 +14,15 @@
             </thead>
             <tbody>
             @foreach($orders as $order)
-                <tr>
+                <tr class="text-center">
                     <td class="p-2 border">#{{ $order->id }}</td>
                     <td class="p-2 border">{{ $order->user->name }}</td>
                     <td class="p-2 border">${{ $order->total_price }}</td>
                     <td class="p-2 border">{{ ucfirst($order->status) }}</td>
                     <td class="p-2 border">
-                        <a href="{{ route('orders.show', $order) }}" class="text-blue-500">View</a>
+                        <a href="{{ route('admin.orders.show', $order) }}" class="text-blue-500">View</a>
                         |
-                        <form action="{{ route('orders.destroy', $order) }}" method="POST" class="inline"
+                        <form action="{{ route('admin.orders.destroy', $order) }}" method="POST" class="inline"
                               onsubmit="return confirm('Delete this order?')">
                             @csrf
                             @method('DELETE')
