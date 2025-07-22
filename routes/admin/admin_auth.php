@@ -26,10 +26,10 @@ Route::middleware(['admin.auth'])->prefix('admin/dashboard')->name('admin.')->gr
 
     Route::get('/users/create', [AdminController::class, 'create'])->name('users.create');
     Route::post('/users/create', [AdminController::class, 'store'])->name('users.store');
-
     Route::delete('/users/{id}/delete', [AdminController::class, 'delete'])->name('users.delete');
 
     Route::get('/my-user-list', [UserController::class, 'create'])->name('my.users.index');
+    Route::get('/my-user-list/{id}', [UserController::class, 'show'])->name('my.users.show');
     Route::delete('/my-user-list/bulk-delete', [UserController::class, 'bulkDelete'])->name('my.users.bulk.delete');
 
 

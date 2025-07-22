@@ -55,46 +55,52 @@ class UserController extends Controller
 //        return redirect()->route('admin.roles.index')->with('admin', 'New admin user created successfully.');
 //    }
 //
-//    // Show edit form for admin user
-//    public function edit($id)
-//    {
-//        $user = Admin::findOrFail($id);
-//        $roles = Role::all();
-//
-//        return view('admin.users.edit', compact('user', 'roles'));
-//    }
-//
-//    public function delete($id): RedirectResponse
-//    {
-//        $currentAdmin = Auth::guard('admin')->user();
-//
-//        AuthNeed::permission('*')->role(['super_admin', 'admin']);
-//        $user = Admin::findOrFail($id);
-//       // dd($user->role->name);
-//
-//        if ($currentAdmin->id === $user->id || $user->role->name === "super_admin") {
-//            return redirect()->back()->with('admin', 'Could not delete this user.');
-//        }
-//         $user->delete();
-//        return redirect()->back()->with('admin', 'Admin user deleted successfully.');
-//
-//    }
-//
-//    // Update admin user
-//    public function update(Request $request, $id)
-//    {
-//        AuthNeed::permission('*')->role(['super_admin', 'admin']);
-//        $request->validate([
-//            'name' => 'required|string|max:255',
-//            'email' => 'required|email|unique:admins,email,' . $id,
-//            'role_id' => 'required|exists:roles,id',
-//        ]);
-//
-//        $user = Admin::findOrFail($id);
-//        $user->update($request->only('name', 'email', 'role_id'));
-//
-//        return redirect()->route('admin.roles.index')->with('admin', 'Admin user updated successfully.');
-//    }
+    // Show edit form for admin user
+    public function edit($id)
+    {
+        $user = Admin::findOrFail($id);
+        $roles = Role::all();
 
+        return view('admin.users.edit', compact('user', 'roles'));
+    }
+//
+    public function delete($id): RedirectResponse
+    {
+        $currentAdmin = Auth::guard('admin')->user();
+
+        AuthNeed::permission('*')->role(['super_admin', 'admin']);
+        $user = Admin::findOrFail($id);
+       // dd($user->role->name);
+
+        if ($currentAdmin->id === $user->id || $user->role->name === "super_admin") {
+            return redirect()->back()->with('admin', 'Could not delete this user.');
+        }
+         $user->delete();
+        return redirect()->back()->with('admin', 'Admin user deleted successfully.');
+
+    }
+//
+    // Update admin user
+    public function update(Request $request, $id)
+    {
+        AuthNeed::permission('*')->role(['super_admin', 'admin']);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:admins,email,' . $id,
+            'role_id' => 'required|exists:roles,id',
+        ]);
+
+        $user = Admin::findOrFail($id);
+        $user->update($request->only('name', 'email', 'role_id'));
+
+        return redirect()->route('admin.roles.index')->with('admin', 'Admin user updated successfully.');
+    }
+
+    public function show($id)
+    {
+        $user = User::with(['orders'])->findOrFail($id);
+
+        return view('admin.users.my-users-show', compact('user'));
+    }
 
 }
