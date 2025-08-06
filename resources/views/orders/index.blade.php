@@ -24,7 +24,7 @@
                 @foreach($orders as $order)
                     <tr class="border-b text-center">
                         <td class="p-2 font-semibold">#{{ $order->id }}</td>
-                        <td class="p-2">${{ $order->total_price }}</td>
+                        <td class="p-2">${{ $order->amount }}</td>
                         <td class="p-2">{{ ucfirst($order->status) }}</td>
                         <td class="p-2">{{ $order->created_at->format('d M, Y') }}</td>
                         <td class="p-2">{{ $order->payment_method }}</td>

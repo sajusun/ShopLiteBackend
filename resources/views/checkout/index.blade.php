@@ -7,17 +7,21 @@
 
             <div class="mb-4">
                 <label class="block font-semibold">Full Name</label>
-                <input type="text" name="shipping_name" class="w-full border rounded p-2" required>
+                <input type="text" name="name" class="w-full border rounded p-2" required>
             </div>
 
             <div class="mb-4">
-                <label class="block font-semibold">Phone Number</label>
-                <input type="text" name="shipping_phone" class="w-full border rounded p-2" required>
+                <label class="block font-semibold">Email: (Optional)</label>
+                <input type="text" name="email" class="w-full border rounded p-2" >
+            </div>
+            <div class="mb-4">
+                <label class="block font-semibold">Phone Number :</label>
+                <input type="text" name="phone" class="w-full border rounded p-2" required>
             </div>
 
             <div class="mb-4">
-                <label class="block font-semibold">Address</label>
-                <textarea name="shipping_address" rows="2" class="w-full border rounded p-2" required></textarea>
+                <label class="block font-semibold">Address :</label>
+                <textarea name="address" rows="2" class="w-full border rounded p-2" required></textarea>
             </div>
             <div class="mb-4">
                 <label class="block font-semibold mb-1">Choose Payment Method</label>

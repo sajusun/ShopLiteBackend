@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('total_price', 10, 2);
+            $table->foreignId('user_id')->constrained()->onDelete('no action');
+            $table->double('amount')->nullable();
             $table->string('status')->default('pending');
+            $table->string('name')->nullable();
+            $table->string('email', 30)->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->string('address')->nullable();
+            $table->decimal('shipping_cost', 10, 2)->default(0);
+            $table->string('transaction_id')->nullable();
+            $table->string('currency', 20)->default('BDT');
+            $table->string('payment_method')->default('cod'); // cod = Cash on Delivery
             $table->timestamps();
         });
     }

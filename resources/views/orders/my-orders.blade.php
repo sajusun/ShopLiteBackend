@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="mt-4 text-right">
-                        <p class="text-md font-semibold">Total: ${{ number_format($order->total_price, 2) }}</p>
+                        <p class="text-md font-semibold">Total: ${{ number_format($order->amount, 2) }}</p>
                     </div>
                 </div>
             @endforeach

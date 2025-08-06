@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Services\PaymentController;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -23,11 +24,13 @@ class CheckoutController extends Controller
     public function placeOrder(Request $request)
     {
         $request->validate([
-            'shipping_name' => 'required|string|max:255',
-            'shipping_phone' => 'required|string|max:20',
-            'shipping_address' => 'required|string|max:1000',
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:1000',
         ]);
-
+        $paymentController = new PaymentController();
+        $valID = uniqid();
         $cart = session()->get('cart', []);
         $flatShippingCost = config('app.order_flat_shipping', 60);
 
@@ -49,12 +52,14 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'shipping_cost' => $flatShippingCost,
-                'total_price' => $total + $flatShippingCost,
+                'amount' => $total + $flatShippingCost,
                 'status' => 'pending',
+                'transaction_id' => $valID,
                 'payment_method' => $request->payment_method,
-                'shipping_name' => $request->shipping_name,
-                'shipping_phone' => $request->shipping_phone,
-                'shipping_address' => $request->shipping_address,
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'address' => $request->address,
             ]);
 
             foreach ($cart as $item) {
@@ -67,11 +72,24 @@ class CheckoutController extends Controller
                 ]);
             }
             DB::commit();
-            // Clear Cart
             session()->forget('cart');
+            $product = [
+                'total_amount' => $total + $flatShippingCost,
+                'name' => 'demo product',
+                'category' => 'demo product',
+                'profile' => 'general',
+            ];
+            $customer = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ];
 
-            return redirect()->route('home')->with('success', 'Order placed successfully!');
-        }catch (\Exception $e){
+//            return redirect()->route('home')->with('success', 'Order placed successfully!');
+            return $paymentController->sslCheckout($product, $customer,$valID);
+
+        } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }

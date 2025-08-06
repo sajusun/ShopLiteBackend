@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductReview;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -27,7 +28,14 @@ class ProductController extends Controller
     public function show($slug,Product $product)
     {
         $product->increment('visits');
+        $averageRating = $product->averageRating();
+        // Paginate reviews (5 per page)
+        $reviews = ProductReview::where('product_id', $product->id)->latest()->paginate(5);
 
-        return view('products.show', compact('product'));
+        $averageRating = $product->ratings()->avg('rating');
+        $totalRatings = $product->ratings()->count();
+
+        return view('products.show',
+            compact('product', 'averageRating', 'totalRatings','reviews'));
     }
 }
