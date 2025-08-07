@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/my-orders/{order}/cancel', [OrderController::class, 'cancel'])->name('my.orders.cancel');
 
 });
-Route::post('/product/rating', [ProductRatingController::class, 'store'])->name('product.rating.store');
+Route::post('/product/{product}/rating', [ProductRatingController::class, 'store'])->name('product.rating.store');
 Route::post('/product/{product}/review', [ProductReviewController::class, 'store'])->name('product.review.store');
 
 

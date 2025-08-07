@@ -36,14 +36,15 @@
         </div>
 
         <div class="px-4 py-2 w-full">
-            <form action="{{ route('product.rating.store') }}" method="POST">
+            <form action="{{ route('product.rating.store',$product->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <div class="flex space-x-2">
                     @for ($i = 1; $i <= 5; $i++)
                         <input type="radio" name="rating" value="{{ $i }}" id="star{{ $i }}" class="hidden">
                         <label for="star{{ $i }}" class="cursor-pointer">
-                            <i class="fas fa-star text-gray-300 hover:text-yellow-500"></i>
+                            <i class="fas fa-star text-gray-300 active:text-yellow-500"
+                               onclick="this.classList.toggle('text-yellow-500')"></i>
                         </label>
                     @endfor
                 </div>
@@ -52,17 +53,9 @@
 
         </div>
 
-        <div>
-            <form action="{{ route('product.review.store',$product->id) }}" method="POST">
-                @csrf
-{{--                <input type="hidden" name="product_id" value="{{ $product->id }}">--}}
-                <textarea name="review" rows="3" class="w-full border p-2 mt-2"
-                          placeholder="Write your review here..."></textarea>
-                <button type="submit" class="bg-blue-500 text-sm text-white rounded py-1 px-4 mt-2 float-right">Submit</button>
-            </form>
+        <div class="max-w-xl">
             <div class="mt-4">
-                <h3 class="text-lg font-semibold mb-2">Customer Reviews</h3>
-
+                <h3 class="text-lg font-semibold mb-2 text-gray-500 border-b">Customer Reviews</h3>
                 @forelse ($reviews as $review)
                     <div class="border-b py-2">
                         <p class="text-sm">{{ $review->review }}</p>
@@ -71,14 +64,32 @@
                 @empty
                     <p>No reviews yet.</p>
                 @endforelse
+                <details class="py-4 transition">
+                    <summary
+                        class="cursor-pointer text-white px-4 py-2 rounded-sm bg-gray-500
+                         hover:bg-gray-600 transition list-none max-w-full">
+                        Submit Your Reviews
+                    </summary>
+                    <form action="{{ route('product.review.store',$product->id) }}" method="POST"
+                          class="py-2 shadow rounded transition">
+                        @csrf
+                        <textarea name="review" rows="2" class="w-full border p-2 mt-2"
+                                  placeholder="Write your review here..."></textarea>
+                        <button type="submit"
+                                class="bg-gray-500 hover:bg-gray-600 text-sm text-white rounded py-1 px-4 mt-2 ml-2">
+                            Submit
+                        </button>
+                    </form>
 
-                <div class="mt-4">
-                    {{ $reviews->links() }} <!-- Laravel pagination links -->
-                </div>
+            </details>
             </div>
-
-
+            <div class="mt-4">
+                {{ $reviews->links() }} <!-- Laravel pagination links -->
+            </div>
         </div>
+
+
+    </div>
     </div>
 
 

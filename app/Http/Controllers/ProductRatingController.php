@@ -8,16 +8,18 @@ use Illuminate\Http\Request;
 
 class ProductRatingController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request,Product $product)
     {
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+//            'product_id' => 'required|exists:products,id',
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
         // Update existing rating or create new
         ProductRating::updateOrCreate(
-            ['product_id' => $request->product_id, 'user_id' => auth()->id()],
+//            ['product_id' => $request->product_id, 'user_id' => auth()->id()],
+            ['product_id' => $product->id,
+                'user_id' => auth()->id()],
             ['rating' => $request->rating]
         );
 
