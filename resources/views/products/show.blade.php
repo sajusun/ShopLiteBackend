@@ -20,15 +20,18 @@
                     </button>
                 </form>
                 <div class="flex items-center py-2 w-full">
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= floor($averageRating))
-                            <i class="fas fa-star text-yellow-500"></i>
-                        @elseif ($i - $averageRating < 1)
-                            <i class="fas fa-star-half-alt text-yellow-500"></i>
-                        @else
-                            <i class="far fa-star text-yellow-500"></i>
-                        @endif
-                    @endfor
+                    <div id="rating-component">
+                        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ $averageRating }}"></star-rating>
+                    </div>
+{{--                    @for ($i = 1; $i <= 5; $i++)--}}
+{{--                        @if ($i <= floor($averageRating))--}}
+{{--                            <i class="fas fa-star text-yellow-500"></i>--}}
+{{--                        @elseif ($i - $averageRating < 1)--}}
+{{--                            <i class="fas fa-star-half-alt text-yellow-500"></i>--}}
+{{--                        @else--}}
+{{--                            <i class="far fa-star text-yellow-500"></i>--}}
+{{--                        @endif--}}
+{{--                    @endfor--}}
                     <span class="text-yellow-500 px-1">({{ number_format($averageRating, 1) }})</span>
                 </div>
 
@@ -88,9 +91,8 @@
             </div>
         </div>
 
-
     </div>
-    </div>
-
-
+{{--    <div id="rating-component">--}}
+{{--        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ 4 }}"></star-rating>--}}
+{{--    </div>--}}
 </x-app-layout>
