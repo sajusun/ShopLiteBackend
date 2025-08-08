@@ -32,10 +32,11 @@ class ProductController extends Controller
         // Paginate reviews (5 per page)
         $reviews = ProductReview::where('product_id', $product->id)->latest()->paginate(5);
 
-        $averageRating = $product->ratings()->avg('rating');
-        $totalRatings = $product->ratings()->count();
+        $rating=ProductRatingController::rating($product);
+        $average = $rating['average'];
+        $total = $rating['total'];
 
         return view('products.show',
-            compact('product', 'averageRating', 'totalRatings','reviews'));
+            compact('product', 'average', 'total','reviews'));
     }
 }

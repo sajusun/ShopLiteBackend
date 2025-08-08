@@ -13,7 +13,7 @@
             @mouseleave="hoverRating = selectedRating"
             @click="rate(star)"
         ></i>
-<!--        <span class="text-yellow-500 px-1">({{ toNumber(userRating, 1) }})</span>-->
+        <span class="text-yellow-500 px-1">ratings {{totalRating}}</span>
         <span v-if="status" class="ml-2 text-sm text-green-500">{{ status }}</span>
     </div>
 </template>
@@ -24,11 +24,13 @@ export default {
     props: {
         productId: { type: Number, required: true },
         userRating: { type: Number, default: 0 },
+        averageRating: { type: Number, default: 0 },
     },
     data() {
         return {
-            selectedRating: this.userRating,
-            hoverRating: this.userRating,
+            selectedRating: this.averageRating,
+            hoverRating: this.averageRating,
+            totalRating:this.userRating,
             debounceTimer: null,
             status: null,
         };
@@ -46,16 +48,22 @@ export default {
         async submitRating(rating) {
             try {
                 await axios.post(`/product/${this.productId}/rating`, {
-                    // product_id: this.productId,
                     rating: rating,
+                }).then(res=>{
+                    this.selectedRating=res.data['average'];
+                    this.totalRating=res.data['total'];
+
+                    console.log(res['data'])
+                    console.log(res['average'])
+                    console.log(res['total'])
                 });
-                this.status = 'Rated successfully!';
+                this.status = 'Rated';
             } catch (err) {
                 this.status = 'Submission failed.';
                 console.error(err);
             }
 
-            setTimeout(() => (this.status = null), 2000);
+            setTimeout(() => (this.status = null), 1000);
         },
     },
 };
@@ -67,11 +75,5 @@ i {
     transition: color 0.2s ease;
 }
 </style>
-<!--<template>-->
-<!--    <div style="color:red; font-size:20px">🌟 VUE IS WORKING 🌟</div>-->
-<!--</template>-->
 
-<!--<script>-->
-<!--export default {}-->
-<!--</script>-->
 

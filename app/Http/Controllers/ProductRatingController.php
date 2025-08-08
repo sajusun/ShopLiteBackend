@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProductRatingController extends Controller
 {
-    public function store(Request $request,Product $product)
+    public function store(Request $request, Product $product)
     {
         $request->validate([
 //            'product_id' => 'required|exists:products,id',
@@ -22,7 +22,24 @@ class ProductRatingController extends Controller
                 'user_id' => auth()->id()],
             ['rating' => $request->rating]
         );
+        $rating = self::rating($product);
+        $totalRatings = $rating['total'];
+        $averageRating = $rating['average'];
+        return response()->json([
+            'average' => $averageRating,
+            'total' => $totalRatings
+        ]);
 
-        return back()->with('success', 'Rating submitted successfully.');
+        //return back()->with('success', 'Rating submitted successfully.');
+    }
+
+    public static function rating(Product $product): array
+    {
+        $averageRating = $product->ratings()->avg('rating');
+        $totalRatings = $product->ratings()->count();
+        return [
+            'average' => $averageRating,
+            'total' => $totalRatings
+        ];
     }
 }

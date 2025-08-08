@@ -21,7 +21,7 @@
                 </form>
                 <div class="flex items-center py-2 w-full">
                     <div id="rating-component">
-                        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ $averageRating }}"></star-rating>
+                        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ $total??0 }}" :average-rating="{{$average??0}}"></star-rating>
                     </div>
 {{--                    @for ($i = 1; $i <= 5; $i++)--}}
 {{--                        @if ($i <= floor($averageRating))--}}
@@ -32,29 +32,12 @@
 {{--                            <i class="far fa-star text-yellow-500"></i>--}}
 {{--                        @endif--}}
 {{--                    @endfor--}}
-                    <span class="text-yellow-500 px-1">({{ number_format($averageRating, 1) }})</span>
+{{--                    <span class="text-yellow-500 px-1">({{ number_format($averageRating, 1) }})</span>--}}
                 </div>
 
             </div>
         </div>
 
-        <div class="px-4 py-2 w-full">
-            <form action="{{ route('product.rating.store',$product->id) }}" method="POST">
-                @csrf
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <div class="flex space-x-2">
-                    @for ($i = 1; $i <= 5; $i++)
-                        <input type="radio" name="rating" value="{{ $i }}" id="star{{ $i }}" class="hidden">
-                        <label for="star{{ $i }}" class="cursor-pointer">
-                            <i class="fas fa-star text-gray-300 active:text-yellow-500"
-                               onclick="this.classList.toggle('text-yellow-500')"></i>
-                        </label>
-                    @endfor
-                </div>
-                <button type="submit" class="btn btn-primary mt-2">Submit Rating</button>
-            </form>
-
-        </div>
 
         <div class="max-w-xl">
             <div class="mt-4">
@@ -92,7 +75,4 @@
         </div>
 
     </div>
-{{--    <div id="rating-component">--}}
-{{--        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ 4 }}"></star-rating>--}}
-{{--    </div>--}}
 </x-app-layout>
