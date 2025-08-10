@@ -13,8 +13,8 @@
             @mouseleave="hoverRating = selectedRating"
             @click="rate(star)"
         ></i>
-        <span class="text-yellow-500 px-1">ratings {{totalRating}}</span>
-        <span v-if="status" class="ml-2 text-sm text-green-500">{{ status }}</span>
+        <span class="text-blue-500 px-1">ratings {{totalRating}}</span>
+        <span v-if="status" class="ml-2 text-sm text-gray-500">{{ status }}</span>
     </div>
 </template>
 

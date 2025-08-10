@@ -13,31 +13,24 @@
 
                 <form method="POST" action="{{ route('cart.add', $product->id) }}">
                     @csrf
-                    <input type="number" name="quantity" value="1" min="1" class="border p-2 w-20 rounded mb-3">
+                    <input type="number" name="quantity" id="quantity" value="1" min="1" class="border p-2 w-20 rounded mb-3">
                     <br>
                     <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">Add to
                         Cart
                     </button>
+                    <button type="button" onclick="goBuy()" class="bg-orange-500 text-white px-5 py-2 rounded hover:bg-orange-600">Buy Now
+                    </button>
+
                 </form>
                 <div class="flex items-center py-2 w-full">
                     <div id="rating-component">
-                        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ $total??0 }}" :average-rating="{{$average??0}}"></star-rating>
+                        <star-rating :product-id="{{ $product->id }}" :user-rating="{{ $total??0 }}"
+                                     :average-rating="{{$average??0}}"></star-rating>
                     </div>
-{{--                    @for ($i = 1; $i <= 5; $i++)--}}
-{{--                        @if ($i <= floor($averageRating))--}}
-{{--                            <i class="fas fa-star text-yellow-500"></i>--}}
-{{--                        @elseif ($i - $averageRating < 1)--}}
-{{--                            <i class="fas fa-star-half-alt text-yellow-500"></i>--}}
-{{--                        @else--}}
-{{--                            <i class="far fa-star text-yellow-500"></i>--}}
-{{--                        @endif--}}
-{{--                    @endfor--}}
-{{--                    <span class="text-yellow-500 px-1">({{ number_format($averageRating, 1) }})</span>--}}
                 </div>
 
             </div>
         </div>
-
 
         <div class="max-w-xl">
             <div class="mt-4">
@@ -67,12 +60,139 @@
                         </button>
                     </form>
 
-            </details>
+                </details>
             </div>
             <div class="mt-4">
                 {{ $reviews->links() }} <!-- Laravel pagination links -->
             </div>
         </div>
-
     </div>
+    <script>
+        function goBuy() {
+            let  qty=document.getElementById('quantity').value;
+            window.location=`{{route('checkout.index','product_id='.$product->id)}}&&quantity=${qty}`;
+        }
+    </script>
 </x-app-layout>
+
+{{--2nd design--}}
+{{--<x-app-layout>--}}
+{{--    <div class="max-w-6xl mx-auto p-6">--}}
+{{--        <div class="container mx-auto p-6 shadow">--}}
+{{--            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">--}}
+{{--                <!-- Left: Product Images -->--}}
+{{--                <div>--}}
+{{--                    <div class="border rounded-lg overflow-hidden">--}}
+{{--                        --}}{{--                <img id="mainImage" src="/images/product-main.jpg" alt="Product" class="w-full h-auto">--}}
+{{--                        <img src="{{ asset('storage/' . $product->image) }}" alt=""--}}
+{{--                             class="w-full object-cover rounded-lg shadow" id="mainImage">--}}
+{{--                    </div>--}}
+{{--                    <div class="flex gap-2 mt-3">--}}
+{{--                        <img src="/images/product1.jpg" class="w-16 h-16 border cursor-pointer hover:border-orange-500"--}}
+{{--                             onclick="changeImage(this.src)">--}}
+{{--                        <img src="/images/product2.jpg" class="w-16 h-16 border cursor-pointer hover:border-orange-500"--}}
+{{--                             onclick="changeImage(this.src)">--}}
+{{--                        <img src="/images/product3.jpg" class="w-16 h-16 border cursor-pointer hover:border-orange-500"--}}
+{{--                             onclick="changeImage(this.src)">--}}
+{{--                        <img src="/images/product4.jpg" class="w-16 h-16 border cursor-pointer hover:border-orange-500"--}}
+{{--                             onclick="changeImage(this.src)">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--                <!-- Right: Product Info -->--}}
+{{--                <div>--}}
+{{--                    <h1 class="text-2xl font-semibold mb-2">{{ $product->name }}</h1>--}}
+
+{{--                    <!-- Ratings -->--}}
+{{--                    <div class="flex items-center gap-2 mb-3">--}}
+{{--                        <div id="rating-component">--}}
+{{--                            <star-rating :product-id="{{ $product->id }}" :user-rating="{{ $total??0 }}"--}}
+{{--                                         :average-rating="{{$average??0}}"></star-rating>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                    <!-- Brand -->--}}
+{{--                    <p class="mb-2 text-gray-500">Brand: <a href="#" class="text-blue-600 hover:underline">No Brand</a>--}}
+{{--                    </p>--}}
+
+{{--                    <!-- Price -->--}}
+{{--                    <div class="flex items-center gap-4 mb-3">--}}
+{{--                        <span class="text-2xl font-bold text-orange-700">৳ {{ $product->price }}</span>--}}
+{{--                        <span class="line-through text-gray-500">৳ 500</span>--}}
+{{--                        <span class="text-green-600 font-semibold">-53%</span>--}}
+{{--                    </div>--}}
+
+{{--                    <!-- Color -->--}}
+{{--                    <div class="mb-4">--}}
+{{--                        <p class="font-semibold mb-1">Color Family</p>--}}
+{{--                        <div class="flex gap-2">--}}
+{{--                            <img src="/images/product1.jpg"--}}
+{{--                                 class="w-12 h-12 border cursor-pointer hover:border-orange-500">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                    <!-- Quantity -->--}}
+{{--                    <div class="flex items-center mb-6">--}}
+{{--                        <span class="font-semibold mr-3">Quantity</span>--}}
+{{--                        <button class="px-3 py-1 border" onclick="updateQty(-1)">-</button>--}}
+{{--                        <input id="qty" type="text" value="1" class="w-12 text-center border-t border-b" readonly>--}}
+{{--                        <button class="px-3 py-1 border" onclick="updateQty(1)">+</button>--}}
+{{--                    </div>--}}
+
+{{--                    <!-- Buttons -->--}}
+{{--                    <div class="flex gap-4">--}}
+{{--                        <button class="bg-sky-500 text-white px-6 py-3 rounded hover:bg-sky-600">Buy Now</button>--}}
+{{--                        <button class="bg-gray-400 text-white px-6 py-3 rounded hover:bg-gray-600">Add to Cart</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--                <div class="max-w-2xl shadow-sm">--}}
+{{--                    <div class="mt-4 py-4 px-6">--}}
+{{--                        <h3 class="text-lg font-semibold mb-2 text-gray-500 border-b">Customer Reviews</h3>--}}
+{{--                        @forelse ($reviews as $review)--}}
+{{--                            <div class="border-b py-2">--}}
+{{--                                <p class="text-sm">{{ $review->review }}</p>--}}
+{{--                                <span class="text-xs text-gray-500">{{ $review->created_at->diffForHumans() }}</span>--}}
+{{--                            </div>--}}
+{{--                        @empty--}}
+{{--                            <p>No reviews yet.</p>--}}
+{{--                        @endforelse--}}
+{{--                        <details class="py-4 transition">--}}
+{{--                            <summary--}}
+{{--                                class="cursor-pointer text-white px-4 py-2 rounded-sm bg-gray-500--}}
+{{--                                 hover:bg-gray-600 transition list-none max-w-full">--}}
+{{--                                Submit Your Reviews--}}
+{{--                            </summary>--}}
+{{--                            <form action="{{ route('product.review.store',$product->id) }}" method="POST"--}}
+{{--                                  class="py-2 shadow rounded transition">--}}
+{{--                                @csrf--}}
+{{--                                <textarea name="review" rows="2" class="w-full border p-2 mt-2"--}}
+{{--                                          placeholder="Write your review here..."></textarea>--}}
+{{--                                <button type="submit"--}}
+{{--                                        class="bg-gray-500 hover:bg-gray-600 text-sm text-white rounded py-1 px-4 mt-2 ml-2">--}}
+{{--                                    Submit--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+
+{{--                    </details>--}}
+{{--                    </div>--}}
+{{--                    <div class="mt-4">--}}
+{{--                        {{ $reviews->links() }} <!-- Laravel pagination links -->--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--    </div>--}}
+{{--    <script>--}}
+{{--        function changeImage(src) {--}}
+{{--            document.getElementById('mainImage').src = src;--}}
+{{--        }--}}
+
+{{--        function updateQty(change) {--}}
+{{--            let qty = document.getElementById('qty');--}}
+{{--            let val = parseInt(qty.value) + change;--}}
+{{--            if (val >= 1) qty.value = val;--}}
+{{--        }--}}
+{{--    </script>--}}
+{{--</x-app-layout>--}}

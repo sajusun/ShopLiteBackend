@@ -5,14 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Services\PaymentController;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
     // Show Checkout Page
-    public function index()
+    public function index(Request $request)
     {
+        if (request()->has('product_id')) {
+            $product = Product::findOrFail($request->product_id);
+
+            $cart[$product->id] = [
+                'product_id' => $product->id,
+                'name'       => $product->name,
+                'price'      => $product->price,
+                'quantity'   => $request->quantity ?? 1,
+                'image'      => $product->image,
+            ];
+            return view('checkout.index', compact('cart'));
+        }
+
         $cart = session()->get('cart', []);
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');

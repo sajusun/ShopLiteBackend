@@ -8,8 +8,10 @@
                 <div class="max-w-xl">
                     <h2 class="text-4xl font-bold text-indigo-700 mb-3">{{ $product->name }}</h2>
                     <p class="text-gray-600 mb-4 line-clamp-3">{{ $product->description }}</p>
+                    <a href="{{ route('checkout.index', 'product_id='.$product->id) }}"
+                       class="bg-orange-500 text-white px-5 py-2 rounded shadow hover:bg-orange-600">Buy Now</a>
                     <a href="{{ route('shop.products.show', [$product->slug,$product->id]) }}"
-                       class="bg-indigo-600 text-white px-5 py-2 rounded shadow hover:bg-indigo-700">Buy Now</a>
+                       class="bg-indigo-600 text-white px-5 py-2 rounded shadow hover:bg-indigo-700">Details</a>
                 </div>
                 <img src="{{ asset('storage/'.$product->image) }}"
                      alt="{{ $product->name }}"
