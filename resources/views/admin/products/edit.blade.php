@@ -51,6 +51,22 @@
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+            <div class="mb-4">
+                <label class="block font-medium mb-2">Sub Category</label>
+                <select name="sub_category_id"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring">
+                    <option value="">Select Sub Category</option>
+                    @foreach($sub_categories as $sub_category)
+                        <option value="{{ $sub_category->id }}"
+                            {{ $product->sub_category_id == $sub_category->id ? 'selected' : '' }}>
+                            {{ $sub_category->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
             <div class="mb-4">
                 <label class="block font-medium mb-2">Product Image</label>

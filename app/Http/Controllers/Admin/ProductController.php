@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SubCategory;
+use Database\Seeders\SubCategorySeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -20,7 +23,8 @@ class ProductController extends Controller
     public function create():View
     {
         $categories = Category::all();
-        return view('admin.products.create', compact('categories'));
+        $sub_categories = SubCategory::all();
+        return view('admin.products.create', compact('categories','sub_categories'));
     }
 
     public function store(Request $request)
@@ -30,11 +34,10 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => 'required|exists:sub_categories,id',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
-
         $product = new Product($request->except('image'));
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = time() . '.' . $request->image->getClientOriginalName();
@@ -44,10 +47,10 @@ class ProductController extends Controller
             $product->image = 'products/'.$filename;
         }
 
-        $product->slug = \Str::slug($request->name);
+        //$product->slug = \Str::slug($request->name);
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'Product added!');
+        return redirect()->route('admin.products.index')->with('success', 'Product added!');
     }
 
     public function show(Product $product)
@@ -58,7 +61,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-        return view('admin.products.edit', compact('product', 'categories'));
+        $sub_categories = SubCategory::all();
+        return view('admin.products.edit', compact('product', 'categories','sub_categories'));
     }
 
     public function update(Request $request, Product $product)
@@ -68,6 +72,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => 'required|exists:sub_categories,id',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
 
@@ -83,10 +88,9 @@ class ProductController extends Controller
             $product->image = 'products/'.$filename;
         }
 
-        $product->slug = \Str::slug($request->name);
+       //$product->slug = Str::slug($request->name);
         $product->save();
-
-        return redirect()->route('products.index')->with('success', 'Product updated!');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated!');
     }
 
     public function destroy(Product $product)

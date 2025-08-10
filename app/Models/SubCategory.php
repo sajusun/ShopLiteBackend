@@ -2,40 +2,37 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-/**
- * @method static inRandomOrder()
- */
-class Category extends Model
+class SubCategory extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
+        'category_id',
         'name',
         'slug',
         'description'
     ];
 
+    // Relation: Subcategory belongs to Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    // Relation: Subcategory has many products
     public function products()
     {
         return $this->hasMany(Product::class);
     }
-    public function subcategories()
-    {
-        return $this->hasMany(Subcategory::class);
-    }
-
-    public function randomProductImage()
-    {
-        return $this->products()->inRandomOrder()->value('image');
-    }
-
     // Boot method for model events
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($subcategory) {
             if (empty($subcategory->slug)) {
                 $subcategory->slug = static::generateUniqueSlug($subcategory->name);
@@ -50,11 +47,10 @@ class Category extends Model
         $originalSlug = $slug;
         $count = 1;
 
-        while (DB::table('categories')->where('slug', $slug)->exists()) {
+        while (DB::table('sub_categories')->where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $count++;
         }
 
         return $slug;
     }
-
 }
