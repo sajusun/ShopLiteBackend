@@ -15,6 +15,11 @@
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+            <div class="mb-4">
+                <label class="block font-medium mb-2">Description</label>
+                <textarea name="description" rows="2" class="w-full border p-2 mt-2"
+                          placeholder="Description....">{{$category->description??''}}</textarea>
+            </div>
 
             <button type="submit"
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">

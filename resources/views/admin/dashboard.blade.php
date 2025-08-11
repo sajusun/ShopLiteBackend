@@ -1,11 +1,4 @@
-{{--<!DOCTYPE html>--}}
-{{--<html lang="en">--}}
-{{--<head>--}}
-{{--    <meta charset="UTF-8">--}}
-{{--    <title>ShopLite Admin Dashboard</title>--}}
-{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
-{{--</head>--}}
-{{--<body class="bg-gray-100">--}}
+
 <x-admin-layout>
 <div class="flex h-full">
     <!-- Sidebar -->
@@ -15,6 +8,7 @@
             <a href="{{route('admin.dashboard')}}" class="block p-2 hover:bg-gray-100">Dashboard</a>
             <a href="{{route('admin.products.index')}}" class="block p-2 hover:bg-gray-100">Products</a>
             <a href="{{route('admin.categories.index')}}" class="block p-2 hover:bg-gray-100">Categories</a>
+            <a href="{{route('admin.sub_categories.index')}}" class="block p-2 hover:bg-gray-100">Sub-Categories</a>
             <a href="{{route('admin.orders.index')}}" class="block p-2 hover:bg-gray-100">Orders</a>
             <a href="{{route('admin.roles.index')}}" class="block p-2 hover:bg-gray-100">Admin & Roles</a>
             <a href="{{route('admin.my.users.index')}}" class="block p-2 hover:bg-gray-100">Users</a>
@@ -31,5 +25,4 @@
     </main>
 </div>
 </x-admin-layout>
-{{--</body>--}}
-{{--</html>--}}
+
