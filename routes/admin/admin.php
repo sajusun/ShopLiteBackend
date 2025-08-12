@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
@@ -11,5 +12,6 @@ Route::middleware('admin.auth')->prefix('admin/dashboard')->name('admin.')->grou
     Route::resource('categories', CategoryController::class);
     Route::resource('sub_categories', SubCategoryController::class);
     Route::resource('orders', OrderController::class);
+    Route::resource('brands', BrandController::class);
 });
 require __DIR__ . '/admin_auth.php';

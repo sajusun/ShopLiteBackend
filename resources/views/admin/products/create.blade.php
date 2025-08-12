@@ -1,8 +1,9 @@
 <x-admin-layout>
+    <div class="h-full w-full my-10">
     <div class="max-w-2xl mx-auto p-6 bg-white shadow rounded">
-        <h1 class="text-2xl font-bold mb-4">Add New Product</h1>
+        <h1 class="text-lg font-bold mb-4 bg-gray-400 text-white p-2 rounded text-center">Add New Product</h1>
 
-        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="text-gray-500">
             @csrf
 
             <div class="mb-4">
@@ -65,6 +66,21 @@
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+            <div class="mb-4">
+                <label class="block font-medium mb-2">Category</label>
+                <select name="category_id"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring">
+                    <option value="">Select Bands</option>
+                    @foreach($brands as $brand)
+                        <option value="{{ $brand->id }}" {{ old('category_id') == $brand->id ? 'selected' : '' }}>
+                            {{ $brand->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
             <div class="mb-4">
                 <label class="block font-medium mb-2">Product Image</label>
@@ -76,10 +92,11 @@
             </div>
 
             <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Save Product
+                    class="bg-blue-500 text-white px-6 py-1 transition font-semibold rounded hover:bg-blue-600">
+                Save
             </button>
-            <a href="{{ route('admin.products.index') }}" class="ml-4 text-gray-600">Cancel</a>
+            <a href="{{ route('admin.products.index') }}" class="ml-6 px-6 py-1 transition font-semibold text-gray-500  hover:text-gray-600">Cancel</a>
         </form>
+    </div>
     </div>
 </x-admin-layout>

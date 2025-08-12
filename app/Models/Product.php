@@ -31,6 +31,10 @@ class Product extends Model
     public function averageRating() {
         return $this->ratings()->avg('rating');
     }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     // Boot method for model events
     protected static function boot()

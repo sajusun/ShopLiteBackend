@@ -6,9 +6,11 @@
         <h1 class="text-2xl font-bold mb-4">ShopLite</h1>
         <nav>
             <a href="{{route('admin.dashboard')}}" class="block p-2 hover:bg-gray-100">Dashboard</a>
-            <a href="{{route('admin.products.index')}}" class="block p-2 hover:bg-gray-100">Products</a>
             <a href="{{route('admin.categories.index')}}" class="block p-2 hover:bg-gray-100">Categories</a>
             <a href="{{route('admin.sub_categories.index')}}" class="block p-2 hover:bg-gray-100">Sub-Categories</a>
+            <a href="{{route('admin.brands.index')}}" class="block p-2 hover:bg-gray-100">Brands</a>
+            <a href="{{route('admin.products.index')}}" class="block p-2 hover:bg-gray-100">Products</a>
+
             <a href="{{route('admin.orders.index')}}" class="block p-2 hover:bg-gray-100">Orders</a>
             <a href="{{route('admin.roles.index')}}" class="block p-2 hover:bg-gray-100">Admin & Roles</a>
             <a href="{{route('admin.my.users.index')}}" class="block p-2 hover:bg-gray-100">Users</a>

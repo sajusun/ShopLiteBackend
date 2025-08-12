@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubCategory;
@@ -24,7 +25,8 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $sub_categories = SubCategory::all();
-        return view('admin.products.create', compact('categories','sub_categories'));
+        $brands = Brand::all();
+        return view('admin.products.create', compact('categories','sub_categories','brands'));
     }
 
     public function store(Request $request)

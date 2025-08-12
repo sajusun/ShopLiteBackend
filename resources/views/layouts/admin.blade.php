@@ -14,10 +14,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased bg-gray-100">
+        <div class="min-h-screen">
             @include('layouts.admin_nav')
-
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow">
@@ -26,9 +25,7 @@
                     </div>
                 </header>
             @endisset
-
-            <!-- Page Content -->
-            <main>
+            <main class="mb-2">
                 {{ $slot }}
             </main>
         </div>
