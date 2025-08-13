@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+/**
+ * @method static latest()
+ */
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'slug', 'price', 'stock', 'image', 'category_id','sub_category_id'];
+    protected $fillable = ['name', 'slug', 'price', 'stock', 'image',
+        'category_id','sub_category_id','brand_id','specification','description'];
 
     public function category()
     {

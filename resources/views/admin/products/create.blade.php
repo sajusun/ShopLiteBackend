@@ -67,17 +67,17 @@
                 @enderror
             </div>
             <div class="mb-4">
-                <label class="block font-medium mb-2">Category</label>
-                <select name="category_id"
+                <label class="block font-medium mb-2">Brands</label>
+                <select name="brand_id"
                         class="w-full border rounded px-3 py-2 focus:outline-none focus:ring">
                     <option value="">Select Bands</option>
                     @foreach($brands as $brand)
-                        <option value="{{ $brand->id }}" {{ old('category_id') == $brand->id ? 'selected' : '' }}>
+                        <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
                             {{ $brand->name }}
                         </option>
                     @endforeach
                 </select>
-                @error('category_id')
+                @error('brand_id')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -92,8 +92,8 @@
             </div>
 
             <button type="submit"
-                    class="bg-blue-500 text-white px-6 py-1 transition font-semibold rounded hover:bg-blue-600">
-                Save
+                    class="bg-blue-500 text-white px-6 py-1
+                    transition font-semibold rounded hover:bg-blue-600">Save
             </button>
             <a href="{{ route('admin.products.index') }}" class="ml-6 px-6 py-1 transition font-semibold text-gray-500  hover:text-gray-600">Cancel</a>
         </form>

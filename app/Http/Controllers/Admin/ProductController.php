@@ -17,7 +17,7 @@ class ProductController extends Controller
 {
     public function index():View
     {
-        $products = Product::with('category')->latest()->get();
+        $products = Product::latest()->paginate(12);
         return view('admin.products.index', compact('products'));
     }
 
@@ -37,8 +37,10 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'required|exists:sub_categories,id',
+            'brand_id'    => 'nullable|exists:brands,id',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
+       // dd($request->brand_id);
         $product = new Product($request->except('image'));
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -64,7 +66,9 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $sub_categories = SubCategory::all();
-        return view('admin.products.edit', compact('product', 'categories','sub_categories'));
+        $brands = Brand::all();
+
+        return view('admin.products.edit', compact('product', 'categories','sub_categories','brands'));
     }
 
     public function update(Request $request, Product $product)
@@ -75,6 +79,7 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'required|exists:sub_categories,id',
+            'brand_id'    => 'nullable|exists:brands,id',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
 
